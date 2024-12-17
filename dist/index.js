@@ -17,12 +17,16 @@ app.use((0, cors_1.default)({
 }));
 const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, {
+    path: "/socket.io/", // Explicitly set the Socket.IO path
     cors: {
-        origin: "http://localhost:5173", // allow your frontend local URL for development
+        origin: ["http://localhost:5173"],
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type"],
-        credentials: true, // if you're using cookies or credentials in the request
-    }
+        credentials: true,
+    },
+    transports: ['websocket', 'polling'],
+    allowEIO3: true, // Enable compatibility with Socket.IO v3 clients
+    pingTimeout: 60000,
 });
 io.on("connection", (socket) => {
     console.log("New user connected");

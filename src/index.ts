@@ -16,12 +16,16 @@ app.use(cors({
 const server = http.createServer(app);
 
 const io = new Server(server, {
-    cors: {
-      origin: "http://localhost:5173", // allow your frontend local URL for development
-      methods: ["GET", "POST"],
-      allowedHeaders: ["Content-Type"],
-      credentials: true, // if you're using cookies or credentials in the request
-    }
+  path: "/socket.io/", // Explicitly set the Socket.IO path
+  cors: {
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true,
+  },
+  transports: ['websocket', 'polling'],
+  allowEIO3: true, // Enable compatibility with Socket.IO v3 clients
+  pingTimeout: 60000, 
   });
 
 io.on("connection", (socket) => {
