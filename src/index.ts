@@ -35,7 +35,19 @@ io.on("connection", (socket) => {
         console.log("User disconnected");
     });
 });
+const keepAlive = () => {
+  const url = 'https://call-io-backend.onrender.com'; // Replace with your actual backend URL
+  setInterval(async () => {
+    try {
+      const response = await fetch(url);
+      console.log('Keep-alive ping sent, status:', response.status);
+    } catch (error) {
+      console.error('Keep-alive ping failed:', error);
+    }
+  }, 840000); // 14 minutes
+};
 
+keepAlive();
 server.listen(8080,()=>{
     console.log("server up")
 })
