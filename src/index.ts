@@ -14,11 +14,11 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "*",
+        origin: "http://localhost:5173",  // Frontend URL (can be * for testing)
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type"],
         credentials: true,
-    }
+      }
 });
 
 io.on("connection", (socket) => {
