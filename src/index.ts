@@ -7,9 +7,12 @@ import roomHandler from "./handlers/RoomHandler";
 
 
 const app = express();
-
-app.use(cors());
-
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true, // enable cookies or credentials, if necessary
+  }));
 const server = http.createServer(app);
 
 const io = new Server(server, {

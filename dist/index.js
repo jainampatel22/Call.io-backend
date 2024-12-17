@@ -9,7 +9,12 @@ const http_1 = __importDefault(require("http"));
 const cors_1 = __importDefault(require("cors"));
 const RoomHandler_1 = __importDefault(require("./handlers/RoomHandler"));
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true, // enable cookies or credentials, if necessary
+}));
 const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, {
     cors: {
