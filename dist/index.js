@@ -13,10 +13,10 @@ app.use((0, cors_1.default)());
 const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, {
     cors: {
-        origin: "http://localhost:5173", // Frontend URL (can be * for testing)
+        origin: "http://localhost:5173", // allow your frontend local URL for development
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type"],
-        credentials: true,
+        credentials: true, // if you're using cookies or credentials in the request
     }
 });
 io.on("connection", (socket) => {

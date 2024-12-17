@@ -14,12 +14,12 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",  // Frontend URL (can be * for testing)
-        methods: ["GET", "POST"],
-        allowedHeaders: ["Content-Type"],
-        credentials: true,
-      }
-});
+      origin: "http://localhost:5173", // allow your frontend local URL for development
+      methods: ["GET", "POST"],
+      allowedHeaders: ["Content-Type"],
+      credentials: true, // if you're using cookies or credentials in the request
+    }
+  });
 
 io.on("connection", (socket) => {
     console.log("New user connected");
