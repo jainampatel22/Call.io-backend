@@ -11,12 +11,12 @@ app.use(cors({
     origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
-    credentials: true, // enable cookies or credentials, if necessary
+    credentials: true,
   }));
 const server = http.createServer(app);
 
 const io = new Server(server, {
-  path: "/socket.io/", // Explicitly set the Socket.IO path
+  path: "/socket.io/", 
   cors: {
     origin: ["http://localhost:5173","https://io-call.onrender.com"],
     methods: ["GET", "POST"],
@@ -24,19 +24,19 @@ const io = new Server(server, {
     credentials: true,
   },
   transports: ['websocket', 'polling'],
-  allowEIO3: true, // Enable compatibility with Socket.IO v3 clients
+  allowEIO3: true, 
   pingTimeout: 60000, 
   });
 
 io.on("connection", (socket) => {
     console.log("New user connected");
-    roomHandler(socket); // pass the socket conn to the room handler for room creation and joining
+    roomHandler(socket);
     socket.on("disconnect", () => {
         console.log("User disconnected");
     });
 });
 const keepAlive = () => {
-  const url = 'https://call-io-backend.onrender.com'; // Replace with your actual backend URL
+  const url = 'https://call-io-backend.onrender.com';
   setInterval(async () => {
     try {
       const response = await fetch(url);
