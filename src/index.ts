@@ -18,7 +18,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   path: "/socket.io/", // Explicitly set the Socket.IO path
   cors: {
-    origin: ["http://localhost:5173","https://call-io-ippr.onrender.com"],
+    origin: ["http://localhost:5173","https://io-call.onrender.com/"],
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
     credentials: true,
