@@ -26,24 +26,39 @@ const roomHandler = (socket: Socket) => {
 
     const joinedRoom = ({ roomId, peerId, username }: IRoomParams & { username: string }) => {
         console.log("joined room called", rooms, roomId, peerId);
-        if(rooms[roomId]) {
-             console.log("New user has joined room", roomId, "with peer id as", peerId);
-               rooms[roomId].push({peerId,username})
-            console.log("added peer to room", rooms);
-            socket.join(roomId); 
-            socket.on("ready", ({username}:{username:string}) => {
-                        socket.to(roomId).emit("user-joined", {peerId,username}); 
-            })
-
-             socket.emit("get-users", {
-                roomId,
-                participants: rooms[roomId]
-            });
+        
+        // Check if the room exists
+        if (!rooms[roomId]) {
+            socket.emit("room-error", { message: "Room does not exist" });
+            return;
         }
+    
+        // Avoid adding duplicate participants
+        const isAlreadyInRoom = rooms[roomId].some((participant) => participant.peerId === peerId);
+        if (!isAlreadyInRoom) {
+            console.log("New user has joined room", roomId, "with peer id as", peerId);
+            rooms[roomId].push({ peerId, username });
+        }
+    
+        console.log("Added peer to room", rooms);
+    
+        // Notify other participants about the new user
+        socket.join(roomId);
+        socket.to(roomId).emit("user-joined", { peerId, username });
+    
+        // Emit updated participant list to the joining client
+        socket.emit("get-users", {
+            roomId,
+            participants: rooms[roomId],
+        });
+    
+        // Send a 'room-joined' event to the client to confirm the join
+        socket.emit("room-joined", { roomId });
     };
+    
 
      socket.on("create-room", createRoom);
-    socket.on("joined-room", joinedRoom);
+    socket.on("join-room", joinedRoom);
 
 
 };
