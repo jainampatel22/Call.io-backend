@@ -51,3 +51,4 @@ keepAlive();
 server.listen(8080,()=>{
     console.log("server up")
 })
+export {io ,server}

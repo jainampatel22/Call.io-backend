@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const uuid_1 = require("uuid");
+const index_1 = require("../index");
 const rooms = {};
 const roomHandler = (socket) => {
     const createRoom = ({ username }) => {
@@ -26,7 +27,7 @@ const roomHandler = (socket) => {
         console.log("Added peer to room", rooms);
         // Notify other participants about the new user
         socket.join(roomId);
-        socket.to(roomId).emit("user-joined", { peerId, username });
+        index_1.io.to(roomId).emit("user-joined", { peerId, username });
         // Emit updated participant list to the joining client
         socket.emit("get-users", {
             roomId,
@@ -37,5 +38,8 @@ const roomHandler = (socket) => {
     };
     socket.on("create-room", createRoom);
     socket.on("join-room", joinedRoom);
+    socket.on('chat-message', ({ message, roomId }) => {
+        socket.to(roomId).emit('chat-message', message);
+    });
 };
 exports.default = roomHandler;

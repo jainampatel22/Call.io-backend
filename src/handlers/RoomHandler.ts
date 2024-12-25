@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { v4 as UUIDv4 } from "uuid";
 import IRoomParams from "../interfaces/IRoomParams";
-
+import {io} from '../index'
 interface Participant {
     peerId: string;
     username: string;
@@ -24,6 +24,7 @@ const roomHandler = (socket: Socket) => {
     };
 
 
+
     const joinedRoom = ({ roomId, peerId, username }: IRoomParams & { username: string }) => {
         console.log("joined room called", rooms, roomId, peerId);
         
@@ -44,7 +45,7 @@ const roomHandler = (socket: Socket) => {
     
         // Notify other participants about the new user
         socket.join(roomId);
-        socket.to(roomId).emit("user-joined", { peerId, username });
+        io.to(roomId).emit("user-joined", { peerId, username });
     
         // Emit updated participant list to the joining client
         socket.emit("get-users", {
@@ -59,7 +60,11 @@ const roomHandler = (socket: Socket) => {
 
      socket.on("create-room", createRoom);
     socket.on("join-room", joinedRoom);
-
+    
+socket.on('chat-message',({message,roomId}:{message:string,roomId:string})=>{
+    socket.to(roomId).emit('chat-message',message)
+    
+})
 
 };
 
