@@ -45,7 +45,7 @@ const roomHandler = (socket: Socket) => {
     
         // Notify other participants about the new user
         socket.join(roomId);
-        io.to(roomId).emit("user-joined", { peerId, username });
+        socket.to(roomId).emit("user-joined", { peerId, username });
     
         // Emit updated participant list to the joining client
         socket.emit("get-users", {
