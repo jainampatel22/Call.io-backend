@@ -36,7 +36,7 @@ io.on("connection", (socket) => {
     });
 });
 const keepAlive = () => {
-  const url = 'https://call-io-backend.onrender.com';
+  const url = 'https://call-io-backend-jvgm.onrender.com';
   setInterval(async () => {
     try {
       const response = await fetch(url);
