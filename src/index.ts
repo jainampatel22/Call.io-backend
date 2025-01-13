@@ -5,7 +5,7 @@ import http from "http";
 import cors from "cors";
 import roomHandler from "./handlers/RoomHandler";
 
-
+const PORT = process.env.PORT || 8080;
 const app = express();
 app.use(cors({
     origin:  ["http://localhost:5173","https://call-io-frontend.onrender.com"],
@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
 // };
 
 // keepAlive();
-server.listen(8080,()=>{
+server.listen(PORT,()=>{
     console.log("server up")
 })
 export {io ,server}
