@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { v4 as UUIDv4 } from "uuid";
 import IRoomParams from "../interfaces/IRoomParams";
-import {io} from '../index'
+
 interface Participant {
     peerId: string;
     username: string;
