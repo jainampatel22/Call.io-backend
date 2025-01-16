@@ -35,19 +35,19 @@ io.on("connection", (socket) => {
         console.log("User disconnected");
     });
 });
-// const keepAlive = () => {
-//   const url = 'https://call-io-backend-jvgm.onrender.com';
-//   setInterval(async () => {
-//     try {
-//       const response = await fetch(url);
-//       console.log('Keep-alive ping sent, status:', response.status);
-//     } catch (error) {
-//       console.error('Keep-alive ping failed:', error);
-//     }
-//   }, 840000); // 14 minutes
-// };
+const keepAlive = () => {
+  const url = 'https://call-io-backend-jvgm.onrender.com';
+  setInterval(async () => {
+    try {
+      const response = await fetch(url);
+      console.log('Keep-alive ping sent, status:', response.status);
+    } catch (error) {
+      console.error('Keep-alive ping failed:', error);
+    }
+  }, 840000); // 14 minutes
+};
 
-// keepAlive();
+keepAlive();
 server.listen(PORT,()=>{
     console.log("server up")
 })
