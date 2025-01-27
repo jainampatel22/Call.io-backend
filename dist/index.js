@@ -31,7 +31,7 @@ exports.server = server;
 const io = new socket_io_1.Server(server, {
     path: "/socket.io/",
     cors: {
-        origin: ["http://localhost:5173", "https://call-io-frontend.onrender.com"],
+        origin: ["https://call-io-frontend.vercel.app"],
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type"],
         credentials: true,
